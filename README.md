@@ -30,58 +30,140 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 
 Poniżej znajduje się lista technologii i konfiguracji, które wdrażam (lub planuję wdrożyć).
 
-### 1. 🛡️ Network Security & NGFW
-Celem jest wyjście poza prosty NAT i wdrożenie inspekcji ruchu na poziomie aplikacji (L7).
-- [ ] **Wdrożenie Sophos XG Home** na fizycznym sprzęcie (zastąpienie UCG Fiber jako głównej bramy).
-- [ ] **SSL Inspection (DPI-SSL):** Instalacja własnego certyfikatu Root CA na urządzeniach końcowych, aby deszyfrować ruch HTTPS.
-- [ ] **Zone-Based Firewall:** Konfiguracja stref (LAN, DMZ, IoT, Guest) zamiast prostych reguł in/out.
-- [ ] **GeoIP Blocking:** Blokowanie ruchu z krajów wysokiego ryzyka.
+# ☠️ Roadmapa SysAdmina / DevOpsa: "Hard Mode"
 
-### 2. 🕸️ Zaawansowany Networking (VLANs & Routing)
-Segmentacja sieci i "utrudnianie sobie życia" routingiem między strefami.
-- [ ] **VLAN Segmentation:**
-    - `VLAN 1` (Mgmt) - tylko zarządzanie.
-    - `VLAN 10` (User) - domownicy.
-    - `VLAN 99` (IoT) - całkowita izolacja od Internetu (no WAN access).
-    - `VLAN 666` (DMZ) - dla usług wystawionych na świat.
-- [ ] **Router-on-a-Stick (RoS):** Konfiguracja na Cisco/Mikrotik i trunking do switcha Ubiquiti.
-- [ ] **Bandwidth Control:** Limitowanie przepustowości między VLANami (QoS) - symulacja wąskich gardeł.
-- [ ] **DHCP Server Migration:** Przeniesienie DHCP z routera na dedykowany serwer **ISC DHCP** (Linux) dla lepszej kontroli opcji (Option 43, TFTP boot).
+> **Filozofia:** "Im więcej się psuje, tym lepiej, bo więcej się nauczę."  
+> **Cel:** Komplikować życie, mieszać vendory, unikać gotowców, budować od zera, poznawać "wąskie gardła".
 
-### 3. ☁️ Private Cloud & High Availability (HA)
-Budowa odpornego klastra wirtualizacyjnego.
-- [ ] **Wirtualizacja - Ewolucja:**
-    1. Proxmox VE (obecnie).
-    2. Migracja do **XCP-ng** (nauka alternatyw Enterprise).
-    3. Testy **VMware ESXi** (standard rynkowy).
-- [ ] **Cluster HA:** Uruchomienie min. 2 węzłów fizycznych.
-    - Symulacja awarii jednego węzła ("odcięcie prądu") i automatyczna migracja VM.
-- [ ] **Storage Backend:**
-    - Testy wydajności: iSCSI vs NFS vs Ceph.
-    - ZFS: Deduplikacja i kompresja danych.
-    - Agregacja łączy (LACP) vs SMB Multichannel dla Storage'u.
-
-### 4. 🔐 Identity & Access Management
-Bezpieczny dostęp do usług i zarządzanie tożsamością.
-- [ ] **Vaultwarden (Bitwarden):** Self-hosted menedżer haseł.
-- [ ] **Reverse Proxy:** Nginx Proxy Manager / Traefik.
-    - Kierowanie ruchem po domenach (np. `hasla.mojadomena.pl`).
-    - Automatyzacja certyfikatów **Let's Encrypt** (Wildcard DNS challenge).
-- [ ] **VPN & Remote Access:**
-    - WireGuard (szybki dostęp).
-    - OpenVPN (TCP 443) - jako backup działający w restrykcyjnych sieciach.
-    - **Cloudflare Tunnels** - dostęp do DMZ bez otwierania portów na routerze.
-
-### 5. 📉 Monitoring & DNS
-- [ ] **AdGuard Home High Availability:**
-    - Dwie instancje (Primary/Secondary).
-    - **AdGuardHome-Sync:** Automatyczna synchronizacja reguł między instancjami.
-    - DNS Rewrites: Lokalne domeny bez edycji plików `/etc/hosts`.
-- [ ] **Monitoring wydajności:**
-    - `iperf3`: Testy wydajności sieci wewnątrz VLAN i między VLANami.
-    - Wykrywanie "wąskich gardeł" przy wirtualizacji sieciowej (VirtIO).
+Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez wirtualizację i konteneryzację, aż po hybrydową chmurę, bezpieczeństwo Enterprise i automatyzację (IaC).
 
 ---
+
+## 🏆 Level 1: Networking & Hardcore Firewalling
+*Celem jest zrozumienie, jak naprawdę działa sieć, wychodząc poza prosty router od dostawcy. Mieszu w vendorach.*
+
+- [ ] **Next-Gen Firewall (NGFW)**
+  - [ ] Wdrożenie **Sophos XG Home** (poznanie mechanizmów kontroli SSL/DPI).
+  - [ ] Analiza porównawcza: Dlaczego **UniFi Express** jest "gorszy" (brak głębokiej inspekcji SSL) vs Sophos.
+  - [ ] Alternatywa/Testy: OPNsense lub PfSense na terminalu (np. Lenovo M720q).
+- [ ] **Router-on-a-Stick (RoS) - "Vendor Hell"**
+  - [ ] Konfiguracja RoS na mieszanym sprzęcie: Ubiquiti + MikroTik + Sophos.
+  - [ ] Celowe wymuszanie routingu między urządzeniami różnych producentów.
+- [ ] **Segmentacja sieci (VLANs & Security Zones)**
+  - [ ] Utworzenie minimum 5 VLAN-ów:
+    - `GUEST` (izolowany całkowicie)
+    - `IoT` (izolacja "niebezpiecznych" urządzeń)
+    - `HOME INFRA` (zaufane urządzenia)
+    - `CAM` (CCTV - odcięcie od Internetu)
+    - `DMZ` (dla usług wystawionych na świat, np. Nextcloud)
+  - [ ] **Polityki Firewall:** Blokada ruchu między VLAN-ami (zasada *Default Deny*).
+  - [ ] Konfiguracja "Zone-Based Firewall".
+  - [ ] Ograniczanie przepustowości (QoS/Limiters) między VLAN-ami.
+
+## 🏗️ Level 2: Core Infrastructure Services (Self-Hosted)
+*Przestajemy polegać na routerze w kwestii usług. Wszystko hostujemy sami na serwerach.*
+
+- [ ] **DHCP Server**
+  - [ ] Wyniesienie DHCP z routera na dedykowany serwer (Linux/Windows Server).
+- [ ] **DNS & AdBlocking**
+  - [ ] **AdGuard Home:** Instalacja dwóch instancji (Primary/Secondary) dla High Availability.
+  - [ ] **AdGuard Home Sync:** Konfiguracja synchronizacji między instancjami.
+  - [ ] **DNS Rewrite:** Lokalne domeny (np. `serwer.lan`) bez wychodzenia do publicznego DNS.
+- [ ] **Zarządzanie hasłami & Bezpieczeństwo**
+  - [ ] **Vaultwarden (Bitwarden):** Wdrożenie wersji Self-hosted.
+  - [ ] Wymóg krytyczny: Wymuszenie HTTPS (szyfrowana transmisja).
+- [ ] **Reverse Proxy**
+  - [ ] Nauka narzędzi: **Nginx Proxy Manager**, **Traefik** lub **Caddy**.
+  - [ ] Cel: Wystawienie usług pod własną domeną (np. `bitwarden.mojadomena.pl`).
+- [ ] **Certyfikaty SSL (PKI)**
+  - [ ] Let's Encrypt (automatyzacja).
+  - [ ] **Hard Mode (LPIC-303):** Własne CA (Certificate Authority), generowanie kluczy, instalacja Root CA na urządzeniach końcowych.
+
+## ☁️ Level 3: Virtualization & Storage (Home Data Center)
+*Budowa wydajnego klastra obliczeniowego i walka z wydajnością I/O.*
+
+- [ ] **Hypervisory - Przegląd rynku**
+  - [ ] **Proxmox VE:** Podstawa (minimum pół roku pracy w klastrze).
+  - [ ] **XCP-ng + Xen Orchestra:** Alternatywa Open Source.
+  - [ ] **VMware ESXi:** (Opcjonalnie, dla znajomości standardu legacy).
+- [ ] **High Availability (HA) Cluster**
+  - [ ] Minimum 2-3 węzły (PC/SFF, Intel/AMD).
+  - [ ] Symulacja awarii: Fizyczne odłączenie węzła ("pull the plug") i test migracji maszyn.
+- [ ] **Storage & NAS**
+  - [ ] Systemy: **TrueNAS Scale** lub **OpenMediaVault**.
+  - [ ] **ZFS:** Zrozumienie pooli, datasetów, snapshotów, ZIL/SLOG.
+  - [ ] Protokóły: iSCSI vs NFS dla wirtualizacji.
+  - [ ] **Stress Test:** Symulacja pracy 100 użytkowników (generowanie obciążenia I/O).
+- [ ] **Networking w wirtualizacji**
+  - [ ] Rozwiązanie problemu "wąskiego gardła" 1Gbit.
+  - [ ] **Agregacja łączy:** LACP (L2) vs SMB Multichannel (L7).
+  - [ ] Instalacja kart 4x1Gb lub 10GbE SFP+ i mapowanie ich do maszyn wirtualnych.
+- [ ] **Konteneryzacja**
+  - [ ] **LXC:** Lekkie kontenery systemowe (Proxmox).
+  - [ ] **Docker & Portainer:** Zarządzanie mikroserwisami.
+
+## 🔐 Level 4: Secure Remote Access & VPN
+*Dostęp do domu z każdego miejsca na ziemi, ale bezpiecznie.*
+
+- [ ] **VPN Tradycyjny**
+  - [ ] OpenVPN (TCP 443 - trudny do zablokowania w hotelach/pracy).
+  - [ ] WireGuard (szybki UDP).
+- [ ] **Mesh VPN (SD-WAN)**
+  - [ ] **Tailscale / Netbird:** Omijanie braku publicznego IP (CGNAT).
+- [ ] **Tunele**
+  - [ ] **Cloudflare Tunnel:** Bez otwierania portów na routerze.
+  - [ ] **Pangolin:** Alternatywa Self-hosted dla Cloudflare.
+
+## 🌍 Level 5: VPS & "Exit to Cloud"
+*Wychodzimy z Home Labu na serwery publiczne. Nauka prawdziwego świata.*
+
+- [ ] **Infrastruktura na VPS**
+  - [ ] Wynajem VPS (OVH, Hetzner, Oracle).
+  - [ ] **Netbird (Self-hosted):** Własny kontroler sieci Mesh na VPS.
+  - [ ] **Nextcloud na VPS:** Odciążenie łącza domowego.
+  - [ ] **Mail Server (Hard Mode):** Postawienie poczty od zera (Postfix, Dovecot, SPF, DKIM, DMARC) - *zakaz używania gotowców na start*.
+- [ ] **Hardening VPS (Security)**
+  - [ ] SSH: Zmiana portów, klucze RSA/Ed25519, brak haseł.
+  - [ ] **CrowdSec:** Nowoczesny IPS/IDS (analiza behawioralna).
+  - [ ] **Wazuh:** SIEM - zbieranie i analiza logów bezpieczeństwa.
+
+## 🆔 Level 6: Identity Management (SSO) & Enterprise
+*Jeden login by wszystkimi rządzić.*
+
+- [ ] **Identity Provider (IdP)**
+  - [ ] **Authentik** lub **Keycloak**.
+  - [ ] Integracja usług (Proxmox, Portainer, Wiki) przez **OAuth2 / OIDC**.
+- [ ] **Active Directory**
+  - [ ] Postawienie Windows Server DC.
+  - [ ] Integracja usług Linuxowych z AD (LDAP/Kerberos).
+- [ ] **MFA / 2FA**
+  - [ ] Wymuszenie 2FA wszędzie.
+  - [ ] Implementacja kluczy sprzętowych (YubiKey) lub Passkeys.
+
+## 🤖 Level 7: DevOps, Automation & IaC (The Endgame)
+*Koniec z "klikaniem". Wszystko jako kod.*
+
+- [ ] **Ansible (Configuration Management)**
+  - [ ] Automatyzacja konfiguracji serwerów (aktualizacje, pakiety).
+  - [ ] Tworzenie Playbooków zastępujących ręczną konfigurację.
+- [ ] **Terraform (Provisioning)**
+  - [ ] Powoływanie maszyn na Proxmoxie/VPS kodem.
+- [ ] **Git & CI/CD**
+  - [ ] **Gitea:** Własne repozytorium kodu.
+  - [ ] **Jenkins / GitHub Actions:** Potoki wdrażania (Pipeline).
+  - [ ] Scenariusz: *Zmiana w kodzie -> Terraform stawia VM -> Ansible konfiguruje -> Testy.*
+- [ ] **Low-Code Automation**
+  - [ ] **n8n:** Automatyzacja powiadomień i przepływów pracy.
+
+---
+
+### 🧪 Dobre Praktyki & Procedury
+1. **Backupy 3-2-1:** Kopia lokalna, kopia na innym nośniku, kopia off-site (chmura szyfrowana).
+2. **Testy odtwarzania:** Backup nieprzetestowany to brak backupu.
+3. **Środowisko Staging:** Najpierw psujemy na testach, potem wdrażamy na produkcję.
+4. **Dokumentacja:** Opisujemy co zrobiliśmy (najlepiej w Markdownie!).
+
+> *Generated for the ambitious SysAdmin who loves trouble.*
 
 ## 📚 Cele Edukacyjne (Certification Path)
 Ten lab jest bezpośrednim przygotowaniem do:
