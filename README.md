@@ -30,16 +30,15 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 
 Poniżej znajduje się lista technologii i konfiguracji, które wdrażam (lub planuję wdrożyć).
 
-# ☠️ Roadmapa SysAdmina / DevOpsa: "Hard Mode"
-
-> **Filozofia:** "Im więcej się psuje, tym lepiej, bo więcej się nauczę."  
-> **Cel:** Komplikować życie, mieszać vendory, unikać gotowców, budować od zera, poznawać "wąskie gardła".
-
-Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez wirtualizację i konteneryzację, aż po hybrydową chmurę, bezpieczeństwo Enterprise i automatyzację (IaC).
+> **Cel:** Komplikować życie, mieszać vendory, unikać gotowców, budować od zera.
 
 ---
 
-## 🏆 Level 1: Networking & Hardcore Firewalling
+<details>
+<summary><b>🏆 Level 1: Networking & Hardcore Firewalling (Kliknij, aby rozwinąć)</b></summary>
+
+<br>
+
 *Celem jest zrozumienie, jak naprawdę działa sieć, wychodząc poza prosty router od dostawcy. Mieszu w vendorach.*
 
 - [ ] **Next-Gen Firewall (NGFW)**
@@ -60,7 +59,13 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
   - [ ] Konfiguracja "Zone-Based Firewall".
   - [ ] Ograniczanie przepustowości (QoS/Limiters) między VLAN-ami.
 
-## 🏗️ Level 2: Core Infrastructure Services (Self-Hosted)
+</details>
+
+<details>
+<summary><b>🏗️ Level 2: Core Infrastructure Services (Self-Hosted)</b></summary>
+
+<br>
+
 *Przestajemy polegać na routerze w kwestii usług. Wszystko hostujemy sami na serwerach.*
 
 - [ ] **DHCP Server**
@@ -79,7 +84,13 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
   - [ ] Let's Encrypt (automatyzacja).
   - [ ] **Hard Mode (LPIC-303):** Własne CA (Certificate Authority), generowanie kluczy, instalacja Root CA na urządzeniach końcowych.
 
-## ☁️ Level 3: Virtualization & Storage (Home Data Center)
+</details>
+
+<details>
+<summary><b>☁️ Level 3: Virtualization & Storage (Home Data Center)</b></summary>
+
+<br>
+
 *Budowa wydajnego klastra obliczeniowego i walka z wydajnością I/O.*
 
 - [ ] **Hypervisory - Przegląd rynku**
@@ -102,7 +113,13 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
   - [ ] **LXC:** Lekkie kontenery systemowe (Proxmox).
   - [ ] **Docker & Portainer:** Zarządzanie mikroserwisami.
 
-## 🔐 Level 4: Secure Remote Access & VPN
+</details>
+
+<details>
+<summary><b>🔐 Level 4: Secure Remote Access & VPN</b></summary>
+
+<br>
+
 *Dostęp do domu z każdego miejsca na ziemi, ale bezpiecznie.*
 
 - [ ] **VPN Tradycyjny**
@@ -114,7 +131,13 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
   - [ ] **Cloudflare Tunnel:** Bez otwierania portów na routerze.
   - [ ] **Pangolin:** Alternatywa Self-hosted dla Cloudflare.
 
-## 🌍 Level 5: VPS & "Exit to Cloud"
+</details>
+
+<details>
+<summary><b>🌍 Level 5: VPS & "Exit to Cloud"</b></summary>
+
+<br>
+
 *Wychodzimy z Home Labu na serwery publiczne. Nauka prawdziwego świata.*
 
 - [ ] **Infrastruktura na VPS**
@@ -127,7 +150,13 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
   - [ ] **CrowdSec:** Nowoczesny IPS/IDS (analiza behawioralna).
   - [ ] **Wazuh:** SIEM - zbieranie i analiza logów bezpieczeństwa.
 
-## 🆔 Level 6: Identity Management (SSO) & Enterprise
+</details>
+
+<details>
+<summary><b>🆔 Level 6: Identity Management (SSO) & Enterprise</b></summary>
+
+<br>
+
 *Jeden login by wszystkimi rządzić.*
 
 - [ ] **Identity Provider (IdP)**
@@ -140,7 +169,13 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
   - [ ] Wymuszenie 2FA wszędzie.
   - [ ] Implementacja kluczy sprzętowych (YubiKey) lub Passkeys.
 
-## 🤖 Level 7: DevOps, Automation & IaC (The Endgame)
+</details>
+
+<details>
+<summary><b>🤖 Level 7: DevOps, Automation & IaC (The Endgame)</b></summary>
+
+<br>
+
 *Koniec z "klikaniem". Wszystko jako kod.*
 
 - [ ] **Ansible (Configuration Management)**
@@ -155,15 +190,15 @@ Ta roadmapa przeprowadzi Cię od zaawansowanej konfiguracji sieci domowej, przez
 - [ ] **Low-Code Automation**
   - [ ] **n8n:** Automatyzacja powiadomień i przepływów pracy.
 
----
+</details>
+
+<br>
 
 ### 🧪 Dobre Praktyki & Procedury
 1. **Backupy 3-2-1:** Kopia lokalna, kopia na innym nośniku, kopia off-site (chmura szyfrowana).
 2. **Testy odtwarzania:** Backup nieprzetestowany to brak backupu.
 3. **Środowisko Staging:** Najpierw psujemy na testach, potem wdrażamy na produkcję.
 4. **Dokumentacja:** Opisujemy co zrobiliśmy (najlepiej w Markdownie!).
-
-> *Generated for the ambitious SysAdmin who loves trouble.*
 
 ## 📚 Cele Edukacyjne (Certification Path)
 Ten lab jest bezpośrednim przygotowaniem do:
