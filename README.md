@@ -1,79 +1,92 @@
-# 🌐 HomeLab & Network Engineering Portfolio
+# 🧪 Advanced Network & System Engineering Lab
 
-![Status](https://img.shields.io/badge/Status-Active-success)
-![Focus](https://img.shields.io/badge/Focus-Network%20Engineering%20%2F%20CCNA-blue)
-![Uptime](https://img.shields.io/badge/Uptime-99.9%25-green)
+![Status](https://img.shields.io/badge/Status-Under_Construction-orange)
+![Philosophy](https://img.shields.io/badge/Philosophy-Break_to_Learn-red)
+![Goal](https://img.shields.io/badge/Goal-CCNA_%2F_LPIC--3-blue)
 
-Witaj w dokumentacji mojego HomeLaba. Projekt ten służy jako poligon doświadczalny do nauki zaawansowanych zagadnień sieciowych, przygotowania do certyfikacji **Cisco CCNA** oraz hostowania prywatnych usług w bezpiecznym środowisku.
+> **"Im więcej się psuje, tym lepiej - bo więcej się uczę."**
 
-## 🎯 Cele Projektu
-* **Edukacja:** Praktyczna nauka routingu i switchingu (Cisco/Mikrotik) oraz przygotowanie do egzaminu CCNA.
-* **Wydajność:** Wykorzystanie łącza światłowodowego 8 Gbps (XGS-PON).
-* **Bezpieczeństwo:** Implementacja segmentacji sieci (VLANs), IDS/IPS oraz bezpiecznego dostępu zdalnego (VPN).
-* **Prywatność:** Własne serwery DNS i blokowanie śledzenia.
+Ten projekt to nie tylko domowe centrum multimedialne. To zaawansowany **poligon inżynierski** nastawiony na symulację środowiska Enterprise. Celowo komplikuję architekturę, mieszam vendorów (Cisco, Ubiquiti, Mikrotik, Sophos) i wdrażam nadmiarowe rozwiązania, aby zrozumieć, jak działają, jak się psują i jak je naprawić.
 
 ---
 
-## 🗺️ Infrastruktura Sieciowa (Core Network)
+## 🏗️ Architektura i Sprzęt (Hardware)
 
-Sercem sieci jest infrastruktura oparta o standard **XGS-PON**, zapewniająca przepustowość WAN na poziomie 8/1 Gbit.
+Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability).
 
-| Rola | Urządzenie | Szczegóły |
+| Typ | Sprzęt | Rola / Planowane użycie |
 | :--- | :--- | :--- |
-| **ISP** | Orange Fiber | FTTH 8/1 Gbit |
-| **ONT** | LEOX LXE-010X-A | Konfiguracja pod XGS-PON |
-| **Router / Gateway** | Ubiquiti UCG Fiber | Zarządzanie siecią, IDS/IPS, WireGuard Server |
-| **Core Switch** | Ubiquiti USW-Pro-HD-24 | L2/L3 Switching (Non-POE) |
-| **Access Point** | Ubiquiti U7 Pro XGS | Wi-Fi 7 Ready |
+| **WAN/Edge** | Orange FTTH 8/1 Gbps + LEOX ONT | XGS-PON Access |
+| **Gateway** | Ubiquiti UCG Fiber ➡️ **Sophos XG Home** | Migracja na NGFW (Deep Packet Inspection / SSL Decrypt) |
+| **Core Switch** | Ubiquiti USW-Pro-HD-24 | Zarządzanie VLANami, LACP |
+| **Lab Network** | Mikrotik RB5009, Cisco 1921/3560 | Router-on-a-Stick, OSPF/EIGRP, Cisco CLI |
+| **Compute Node 1** | Lenovo Tiny M720q | Proxmox VE (docelowo Node w klastrze) |
+| **Compute Node 2** | *Planowany zakup (SFF)* | Drugi węzeł do HA / migracji maszyn |
+| **Storage** | NAS / Shared Storage | iSCSI / ZFS dla klastra wirtualizacyjnego |
 
 ---
 
-## 🎓 Cisco/Mikrotik Lab (CCNA Study)
+## 🗺️ Mapa Drogowa (Project Roadmap)
 
-Wydzielona sekcja fizyczna służąca do symulacji topologii sieciowych i nauki CLI.
+Poniżej znajduje się lista technologii i konfiguracji, które wdrażam (lub planuję wdrożyć).
 
-* **Router:** Mikrotik RB5009 UPR (Lab Core)
-* **Routery Cisco:** 2x Cisco 1921 (ISR G2)
-* **Switche Cisco:** 2x Cisco 3560 (Layer 3)
+### 1. 🛡️ Network Security & NGFW
+Celem jest wyjście poza prosty NAT i wdrożenie inspekcji ruchu na poziomie aplikacji (L7).
+- [ ] **Wdrożenie Sophos XG Home** na fizycznym sprzęcie (zastąpienie UCG Fiber jako głównej bramy).
+- [ ] **SSL Inspection (DPI-SSL):** Instalacja własnego certyfikatu Root CA na urządzeniach końcowych, aby deszyfrować ruch HTTPS.
+- [ ] **Zone-Based Firewall:** Konfiguracja stref (LAN, DMZ, IoT, Guest) zamiast prostych reguł in/out.
+- [ ] **GeoIP Blocking:** Blokowanie ruchu z krajów wysokiego ryzyka.
+
+### 2. 🕸️ Zaawansowany Networking (VLANs & Routing)
+Segmentacja sieci i "utrudnianie sobie życia" routingiem między strefami.
+- [ ] **VLAN Segmentation:**
+    - `VLAN 1` (Mgmt) - tylko zarządzanie.
+    - `VLAN 10` (User) - domownicy.
+    - `VLAN 99` (IoT) - całkowita izolacja od Internetu (no WAN access).
+    - `VLAN 666` (DMZ) - dla usług wystawionych na świat.
+- [ ] **Router-on-a-Stick (RoS):** Konfiguracja na Cisco/Mikrotik i trunking do switcha Ubiquiti.
+- [ ] **Bandwidth Control:** Limitowanie przepustowości między VLANami (QoS) - symulacja wąskich gardeł.
+- [ ] **DHCP Server Migration:** Przeniesienie DHCP z routera na dedykowany serwer **ISC DHCP** (Linux) dla lepszej kontroli opcji (Option 43, TFTP boot).
+
+### 3. ☁️ Private Cloud & High Availability (HA)
+Budowa odpornego klastra wirtualizacyjnego.
+- [ ] **Wirtualizacja - Ewolucja:**
+    1. Proxmox VE (obecnie).
+    2. Migracja do **XCP-ng** (nauka alternatyw Enterprise).
+    3. Testy **VMware ESXi** (standard rynkowy).
+- [ ] **Cluster HA:** Uruchomienie min. 2 węzłów fizycznych.
+    - Symulacja awarii jednego węzła ("odcięcie prądu") i automatyczna migracja VM.
+- [ ] **Storage Backend:**
+    - Testy wydajności: iSCSI vs NFS vs Ceph.
+    - ZFS: Deduplikacja i kompresja danych.
+    - Agregacja łączy (LACP) vs SMB Multichannel dla Storage'u.
+
+### 4. 🔐 Identity & Access Management
+Bezpieczny dostęp do usług i zarządzanie tożsamością.
+- [ ] **Vaultwarden (Bitwarden):** Self-hosted menedżer haseł.
+- [ ] **Reverse Proxy:** Nginx Proxy Manager / Traefik.
+    - Kierowanie ruchem po domenach (np. `hasla.mojadomena.pl`).
+    - Automatyzacja certyfikatów **Let's Encrypt** (Wildcard DNS challenge).
+- [ ] **VPN & Remote Access:**
+    - WireGuard (szybki dostęp).
+    - OpenVPN (TCP 443) - jako backup działający w restrykcyjnych sieciach.
+    - **Cloudflare Tunnels** - dostęp do DMZ bez otwierania portów na routerze.
+
+### 5. 📉 Monitoring & DNS
+- [ ] **AdGuard Home High Availability:**
+    - Dwie instancje (Primary/Secondary).
+    - **AdGuardHome-Sync:** Automatyczna synchronizacja reguł między instancjami.
+    - DNS Rewrites: Lokalne domeny bez edycji plików `/etc/hosts`.
+- [ ] **Monitoring wydajności:**
+    - `iperf3`: Testy wydajności sieci wewnątrz VLAN i między VLANami.
+    - Wykrywanie "wąskich gardeł" przy wirtualizacji sieciowej (VirtIO).
 
 ---
 
-## 🖥️ Serwery i Obliczenia (Compute)
-
-Środowisko do wirtualizacji i konteneryzacji usług.
-
-| Urządzenie | Specyfikacja | OS / Hypervisor | Rola Główna |
-| :--- | :--- | :--- | :--- |
-| **Lenovo Tiny M720q** | Intel Core i5, RAM rozbudowany | **Proxmox VE** | Wirtualizacja, GNS3 Server, LXC |
-| **Raspberry Pi 4B** | ARM64 | **Debian 13** | Usługi lekkie, DNS Backup |
+## 📚 Cele Edukacyjne (Certification Path)
+Ten lab jest bezpośrednim przygotowaniem do:
+1.  **Cisco CCNA 200-301** (Routing, Switching, IP Services).
+2.  **LPIC-3 (303 Security & 305/306 Virtualization/HA)** - stąd nacisk na OpenVPN, Certificates, Cluster HA i iSCSI.
 
 ---
-
-## ⚙️ Konfiguracja Logiczna i Bezpieczeństwo
-
-### Segmentacja Sieci (VLANs)
-Sieć została podzielona na odseparowane strefy w celu zwiększenia bezpieczeństwa i kontroli ruchu.
-
-| VLAN ID | Nazwa | Opis | Dostęp do Internetu |
-| :---: | :--- | :--- | :---: |
-| **1** | Native / LAN | Zaufane urządzenia domowe | ✅ Tak |
-| **99** | IoT | Izolowana sieć dla urządzeń Smart Home | ❌ Nie (blokada WAN) |
-| **100** | Management | Dostęp do interfejsów administracyjnych | ✅ Tak (Restricted) |
-
-### Usługi i Oprogramowanie
-* **Symulacja Sieci:** GNS3 Server (uruchomiony na Proxmox) do emulacji złożonych topologii.
-* **DNS & Privacy:**
-    * *Primary:* AdGuard Home
-    * *Secondary/Backup:* Pi-hole (LXC na Proxmox)
-* **VPN:** WireGuard (hostowany na UCG Fiber) dla bezpiecznego dostępu do LAN z zewnątrz.
-
----
-
-## 🔮 Plany Rozwoju (Roadmap)
-- [ ] Zdanie egzaminu Cisco CCNA.
-- [ ] Implementacja bardziej zaawansowanych reguł Firewall na Mikrotiku.
-- [ ] Automatyzacja konfiguracji sieci (Ansible/Python).
-- [ ] Rozbudowa monitoringu (Grafana/Prometheus).
-
----
-*Dokumentacja aktualizowana na bieżąco. Ostatnia aktualizacja: 2024.*
+*Dokumentacja żyje własnym życiem. Jeśli coś działa - prawdopodobnie jutro to zmienię, żeby sprawdzić inne rozwiązanie.*
