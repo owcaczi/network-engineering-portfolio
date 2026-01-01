@@ -194,16 +194,45 @@ Poniżej znajduje się lista technologii i konfiguracji, które wdrażam (lub pl
 
 <br>
 
-### 🧪 Dobre Praktyki & Procedury
-1. **Backupy 3-2-1:** Kopia lokalna, kopia na innym nośniku, kopia off-site (chmura szyfrowana).
-2. **Testy odtwarzania:** Backup nieprzetestowany to brak backupu.
-3. **Środowisko Staging:** Najpierw psujemy na testach, potem wdrażamy na produkcję.
-4. **Dokumentacja:** Opisujemy co zrobiliśmy (najlepiej w Markdownie!).
-
 ## 📚 Cele Edukacyjne (Certification Path)
-Ten lab jest bezpośrednim przygotowaniem do:
-1.  **Cisco CCNA 200-301** (Routing, Switching, IP Services).
-2.  **LPIC-3 (303 Security & 305/306 Virtualization/HA)** - stąd nacisk na OpenVPN, Certificates, Cluster HA i iSCSI.
+
+## 🎯 Cele i Certyfikacja
+
+<details>
+<summary><b>⏳ Short-term Goals: Cisco CCNA (Kliknij, aby rozwinąć)</b></summary>
+
+<br>
+
+**Status certyfikacji sieciowej (Cisco):**
+
+- [x] **1. CCNA: Introduction to Networks** *Status: DONE ✅* *(Tu możesz wkleić link do swojego badge'a na Credly jako zwykły link, np.: [Zobacz Badge](https://www.credly.com/...))*
+
+- [ ] **2. CCNA: Switching, Routing, and Wireless Essentials** *Status: In Progress 🔄*
+
+- [ ] **3. CCNA: Enterprise Networking, Security, and Automation** *Status: In Progress 🔄*
+
+- [ ] **4. Cisco CCNA 200-301 (Egzamin końcowy)** *Zakres: Routing, Switching, IP Services*
+
+</details>
+
+<details>
+<summary><b>🚀 Long-term Goals: Linux Professional Institute (LPIC)</b></summary>
+
+<br>
+
+**Ścieżka administracji systemami Linux (LPI):**
+
+- [ ] **1. LPIC 1-101** *Fundamenty systemu Linux + sieć i storage (baza pod HA).*
+
+- [ ] **2. LPIC-1 102** *Usługi, bezpieczeństwo i automatyzacja podstawowa.*
+
+- [ ] **3. LPIC-2** *Administracja zaawansowana + zarządzanie środowiskami produkcyjnymi.*
+
+- [ ] **4. LPIC 3-305/306** *High Availability (HA), klastry i wirtualizacja (infrastruktura krytyczna).*
+
+- [ ] **5. LPIC 3-303** *Bezpieczeństwo infrastruktury i usług krytycznych.*
+
+</details>
 
 ---
 *Dokumentacja żyje własnym życiem. Jeśli coś działa - prawdopodobnie jutro to zmienię, żeby sprawdzić inne rozwiązanie.*
