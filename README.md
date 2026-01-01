@@ -6,7 +6,7 @@
 
 > **"Im więcej się psuje, tym lepiej - bo więcej się uczę."**
 
-Ten projekt to nie tylko domowe centrum multimedialne. To zaawansowany **poligon inżynierski** nastawiony na symulację środowiska Enterprise. Celowo komplikuję architekturę, mieszam vendorów (Cisco, Ubiquiti, Mikrotik, Sophos) i wdrażam nadmiarowe rozwiązania, aby zrozumieć, jak działają, jak się psują i jak je naprawić.
+Ten projekt to nie . To zaawansowany **poligon inżynierski** nastawiony na symulację środowiska Enterprise. Celowo komplikuję architekturę, mieszam vendorów (Cisco, Ubiquiti, Mikrotik) i wdrażam nadmiarowe rozwiązania, aby zrozumieć, jak działają, jak się psują i jak je naprawić.
 
 ---
 
@@ -17,16 +17,16 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 | Typ | Sprzęt | Rola / Planowane użycie |
 | :--- | :--- | :--- |
 | **WAN/Edge** | Orange FTTH 8/1 Gbps + LEOX ONT | XGS-PON Access |
-| **Gateway** | Ubiquiti UCG Fiber ➡️ **Sophos XG Home** | Migracja na NGFW (Deep Packet Inspection / SSL Decrypt) |
+| **Gateway** | Ubiquiti UCG Fiber | IDS/IPS |
 | **Core Switch** | Ubiquiti USW-Pro-HD-24 | Zarządzanie VLANami, LACP |
 | **Lab Network** | Mikrotik RB5009, Cisco 1921/3560 | Router-on-a-Stick, OSPF/EIGRP, Cisco CLI |
 | **Compute Node 1** | Lenovo Tiny M720q | Proxmox VE (docelowo Node w klastrze) |
 | **Compute Node 2** | *Planowany zakup (SFF)* | Drugi węzeł do HA / migracji maszyn |
-| **Storage** | NAS / Shared Storage | iSCSI / ZFS dla klastra wirtualizacyjnego |
+| **Storage** | *NAS In-progress*| iSCSI / ZFS dla klastra wirtualizacyjnego |
 
 ---
 
-## 🗺️ Mapa Drogowa (Project Roadmap)
+## 🗺️ Project Roadmap
 
 Poniżej znajduje się lista technologii i konfiguracji, które wdrażam (lub planuję wdrożyć).
 
