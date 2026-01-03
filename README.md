@@ -25,8 +25,8 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 
 ---
 
-<img src="Images\spe.png" alt="Topologia Sieci HomeLab" width="50%">
-<img src="Images\rak.jpg" alt="Topologia Sieci HomeLab" width="50%">
+<img src="img\spe.png" alt="Topologia Sieci HomeLab" width="50%">
+<img src="img\rak.jpg" alt="Topologia Sieci HomeLab" width="50%">
 <br>
 
 
@@ -37,7 +37,7 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 <details>
 <summary><b>📷 Zobacz schemat graficzny</b></summary>
 <br>
-<img src="Images\topology.png" alt="Topologia Sieci HomeLab" width="80%">
+<img src="img\topology.png" alt="Topologia Sieci HomeLab" width="80%">
 <br><br>
 </details>
 
@@ -95,7 +95,7 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 
 | Kurs / Egzamin | Opis | Status | Deadline | Badge |
 | :--- | :--- | :---: | :---: | :---: |
-| **1. Introduction to Networks** | *Wprowadzenie do sieci, modele OSI/TCP-IP, podstawy adresacji IP i architektury sieciowej.* | ✅ **DONE** | - | <img src="Images\badge.png" height="50"> |
+| **1. Introduction to Networks** | *Wprowadzenie do sieci, modele OSI/TCP-IP, podstawy adresacji IP i architektury sieciowej.* | ✅ **DONE** | - | <img src="img\badge.png" height="50"> |
 | **2. Switching, Routing, & Wireless** | *Przełączanie (switching), routing, technologie bezprzewodowe (Wi-Fi) i podstawy VLAN-ów.* | 🔄 **In Progress** | **14.01** | 🔒 |
 | **3. Enterprise, Security, & Automation** | *Sieci enterprise, bezpieczeństwo (firewalle, VPN), automatyzacja i programowalność (SDN).* | ⏳ **Planned** | **31.01** | 🔒 |
 | **4. Egzamin CCNA 200-301** | *Pełny egzamin certyfikujący obejmujący wszystkie moduły CCNA.* | 🎯 **Cel** | **15.02** | 🏆 |
