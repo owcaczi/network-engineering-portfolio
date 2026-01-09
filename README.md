@@ -140,7 +140,7 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
   - ✅ Konfiguracja RoS na mieszanym sprzęcie: Ubiquiti + MikroTik.
   - ✅ Celowe wymuszanie routingu między urządzeniami różnych producentów.
 
-- ⚠️ **Segmentacja sieci (VLANs & Security Zones)**
+- ✅ **Segmentacja sieci (VLANs & Security Zones)**
   - ✅ Utworzenie minimum 5 VLAN-ów:
     - `GUEST` (izolowany całkowicie)
     - `IoT` (izolacja "niebezpiecznych" urządzeń)
@@ -148,8 +148,9 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
     - `CAM` (CCTV - odcięcie od Internetu)
     - `DMZ` (dla usług wystawionych na świat, np. Nextcloud)
   - ✅ **Polityki Firewall:** Blokada ruchu między VLAN-ami 
-  - ❌ Konfiguracja "Zone-Based Firewall".
+  - ✅ Konfiguracja "Zone-Based Firewall".
   - ✅ Ograniczanie przepustowości (QoS/Limiters) między VLAN-ami.
+  - ✅ Implementacja STP (RSTP)
 
 </details>
 
