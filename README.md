@@ -45,7 +45,7 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 
 ### 🏗️ Architektura logiczna
 
->Infrastruktura została podzielona na dwa odseparowane logicznie środowiska (Environments), aby zapewnić stabilność usług domowych przy jednoczesnym zachowaniu swobody testów inżynierskich.
+>Infrastruktura została podzielona na dwa odseparowane logicznie środowiska, aby zapewnić stabilność usług domowych przy jednoczesnym zachowaniu swobody testów inżynierskich.
 
 <details>
 <summary><b>🧩 Szczegóły podziału sprzętowego</b></summary>
@@ -238,14 +238,14 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 
 *Wychodzimy z Home Labu na serwery publiczne. Nauka prawdziwego świata.*
 
-- ❌ **Infrastruktura na VPS**
-  - ❌ Wynajem VPS (OVH, Hetzner, Oracle).
+- ⚠️ **Infrastruktura na VPS**
+  - ✅ Wynajem VPS (OVH, Hetzner, Oracle).
   - ❌ **Netbird (Self-hosted):** Własny kontroler sieci Mesh na VPS.
   - ❌ **Nextcloud na VPS:** Odciążenie łącza domowego.
   - ❌ **Mail Server (Hard Mode):** Postawienie poczty od zera (Postfix, Dovecot, SPF, DKIM, DMARC)
 
-- ❌ **Hardening VPS (Security)**
-  - ❌ SSH: Zmiana portów, klucze RSA/Ed25519, brak haseł.
+- ⚠️ **Hardening VPS (Security)**
+  - ✅ SSH: Zmiana portów, klucze RSA/Ed25519, brak haseł.
   - ❌ **CrowdSec:** Nowoczesny IPS/IDS (analiza behawioralna).
   - ❌ **Wazuh:** SIEM - zbieranie i analiza logów bezpieczeństwa.
 
@@ -261,9 +261,9 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
   - ❌ **Authentik** lub **Keycloak**.
   - ❌ Integracja usług (Proxmox, Portainer, Wiki) przez **OAuth2 / OIDC**.
 
-- ❌ **Active Directory**
-  - ❌ Postawienie Windows Server DC.
-  - ❌ Integracja usług Linuxowych z AD (LDAP/Kerberos).
+- ✅ **Active Directory**
+  - ✅ Postawienie Windows Server DC.
+  - ✅ Integracja usług Linuxowych z AD (LDAP/Kerberos).
 
 - ✅ **MFA / 2FA**
   - ✅ Wymuszenie 2FA wszędzie.
