@@ -203,9 +203,9 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
   - ❌ Protokóły: iSCSI vs NFS dla wirtualizacji.
   - ❌ **Stress Test:** Symulacja pracy 100 użytkowników (generowanie obciążenia I/O).
 
-- ❌ **Networking w wirtualizacji**
-  - ❌ **Agregacja łączy:** LACP (L2) vs SMB Multichannel (L7).
-  - ❌ Rozwiązywanie problemów z wąskim gardłem sieciowym dla maszyn wirtualnych.
+- ✅ **Networking w wirtualizacji**
+  - ✅ **Agregacja łączy:** LACP (L2) vs SMB Multichannel (L7).
+  - ✅ Rozwiązywanie problemów z wąskim gardłem sieciowym dla maszyn wirtualnych.
 
 - [ ] **Konteneryzacja**
   - ✅ **LXC:** Lekkie kontenery systemowe (Proxmox).
