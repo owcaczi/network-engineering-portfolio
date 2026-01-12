@@ -168,6 +168,8 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
   - ❌ **AdGuard Home:** Instalacja dwóch instancji (Primary/Secondary) dla High Availability.
   - ❌ **AdGuard Home Sync:** Konfiguracja synchronizacji między instancjami.
   - ❌ **DNS Rewrite:** Lokalne domeny (np. `serwer.lan`) bez wychodzenia do publicznego DNS.
+  -✅ **SNMP** Wykorzystanie protokołu SNMP z użyciem Zabbix w kontenerze LXC.
+  -✅ **Syslog** Loggowanie ruchu z użyciem zdalnego serwera.
 
 - ❌ **Zarządzanie hasłami**
   - ❌ **Vaultwarden (Bitwarden):** Wdrożenie wersji Self-hosted.
@@ -248,6 +250,7 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
   - ✅ SSH: Zmiana portów, klucze RSA/Ed25519, brak haseł.
   - ❌ **CrowdSec:** Nowoczesny IPS/IDS (analiza behawioralna).
   - ❌ **Wazuh:** SIEM - zbieranie i analiza logów bezpieczeństwa.
+  - ✅ **Fail2Ban** Zabezpiezczenie przed atakami bruteforce.
 
 </details>
 
