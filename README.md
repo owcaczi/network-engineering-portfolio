@@ -5,7 +5,7 @@
 ![Goal](https://img.shields.io/badge/Goal-CCNA_%2F_LPIC--3-blue)
 
 
-Ten to sandbox nastawiony na symulację środowiska Enterprise. Celowo komplikuję architekturę, mieszam vendorów (Cisco, Ubiquiti, Mikrotik) i wdrażam nadmiarowe rozwiązania, aby zrozumieć, jak działają, jak się psują i jak je naprawić.
+Ten projekt to sandbox nastawiony na symulację środowiska Enterprise. Celowo komplikuję architekturę, mieszam vendorów (Cisco, Ubiquiti, Mikrotik) i wdrażam nadmiarowe rozwiązania, aby zrozumieć, jak działają, jak się psują i jak je naprawić.
 
 ---
 
