@@ -9,7 +9,7 @@ Ten projekt to sandbox nastawiony na symulację środowiska Enterprise. Celowo k
 
 ---
 
-## 🏗️ Architektura i Sprzęt (Hardware)
+##  Architektura i Sprzęt (Hardware)
 
 Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability).
 
@@ -30,64 +30,50 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 <br>
 
 
-## 🗺️ Topologia sieci
+## 🏗️ Topologia i Rola Urządzeń
 
->Poniżej znajduje się wizualny schemat połączeń fizycznych w HomeLabie.
+### 1. Production Core (Ubiquiti)
 
-<details>
-<summary><b>📷 Zobacz schemat graficzny</b></summary>
-<br>
-<img src="img\topology.png" alt="Topologia Sieci HomeLab" width="80%">
-<br><br>
-</details>
+Fundament sieci zapewniający stabilność i bezpieczeństwo.
+* **Gateway / UTM:** **Ubiquiti UCG Fiber**.
+    * Rola: Główny router, Firewall, IDS/IPS (Intrusion Prevention System).
+    * Funkcja: Kontroler sieci UniFi (SDN).
 
+  <img src="img/ucg.png" width="50%">
+---
+* **Distribution Switch:** **USW Pro/Enterprise 24 PoE**.
+    * **Backbone:** Uplinki 10GbE SFP+
+    * **Access:** Porty 2.5GbE
+
+  <img src="img/switch.png" width="50%">
+---
+### 2. Lab & Training Zone (MikroTik)
+Środowisko "Air-Gapped" lub wydzielone, uruchamiane do celów edukacyjnych.
+* **Router:** **MikroTik RB5009 UPR**.
+    * **Tryb pracy:** On-Demand (uruchamiany do testów).
+    * **Zastosowanie:**
+        * Nauka integracji Multi-Vendor między UniFi a MikroTik.
+        * Symulacja WAN dla fizycznego labu Cisco (CCNA/CCNP).
+        * Testy skryptów RouterOS i kontenerów.
+
+  <img src="img/mikrotik.png" width="50%">
 ---
 
-### 🏗️ Architektura logiczna
+## 🗺️ Mapa VLAN (Production)
 
->Infrastruktura została podzielona na dwa odseparowane logicznie środowiska, aby zapewnić stabilność usług domowych przy jednoczesnym zachowaniu swobody testów inżynierskich.
-
-<details>
-<summary><b>🧩 Szczegóły podziału sprzętowego</b></summary>
-<br>
-
-| Środowisko | Komponent fizyczny | Szczegóły |
-| :--- | :--- | :--- |
-| **Produkcyjne (Ubiquiti UniFi)** | Edge | Orange ONT ➔ **UCG Fiber** Gateway. |
-| **Produkcyjne (Ubiquiti UniFi)** | Core Switching | **USW Pro 24 HD** L3 Switching. |
-| **Produkcyjne (Ubiquiti UniFi)** | Access | **U7 Pro XGS** – łączność dla urządzeń bezprzewodowych. |
-| **Produkcyjne (Ubiquiti UniFi)** | IoT | Izolowana strefa dla IoT (fizyczna separacja via porty/switch). |
-| **Laboratoryjne (Mikrotik, Cisco)** | Symulowany ISP | **MikroTik RB5009**. Pełni rolę dostawcy WAN dla labu. |
-| **Laboratoryjne (Mikrotik, Cisco)** | Lab Edge | 2x **Cisco 1941**. Działają w HSRP. |
-| **Laboratoryjne (Mikrotik, Cisco)** | Lab Core | 3x **Cisco 3560 Catalyst**. Topologia Spine-Leaf. |
-
-</details>
-
+| VLAN ID | Nazwa | Adresacja | Przeznaczenie |
+| :--- | :--- | :--- | :--- |
+| **1** | NATIVE/MGMT | x.x.x.x/24 | Untagged vlan, Infrastruktura sieciowa (Switch, AP). |
+| **10** | LAB | 10.0.10.0/24 | Proxmox, Zabbix, kontenery. |
+| **20** | HOME | 10.0.20.0/24 | Zaufane urządzenia (PC, Laptop). |
+| **30** | IOT | 10.0.30.0/24 | Smart Home (Izolacja). |
+| **99** | GUEST | 10.0.99.0/24 | Urządzenia współlokatorów i gości (Izolacja). |
 ---
-
-### 🛡️ Plan adresacji (VLAN)
-
->Zastosowano standard **RFC1918** z podziałem na VLAN-y funkcjonalne. Jest to separacja na poziomie warstw 2/3 (bez zmiany fizycznego okablowania), co pozwala na izolację ruchu bez dodatkowych switchy.
-
-<details>
-<summary><b>📋 Tabela adresacji i VLAN-ów</b></summary>
-<br>
-
-| VLAN ID | Nazwa sieci | Podsieć | Opis / Rola |
-| :---: | :--- | :--- | :--- |
-| **10** | `MGMT_INFRA` | `10.10.0.0/24` | Zarządzanie przełącznikami i AP (Sieć Natywna). |
-| **20** | `HOME_LAN` | `10.20.0.0/24` | Urządzenia końcowe (Trusted). |
-| **30** | `IOT_ISOLATED` | `10.30.0.0/24` | Urządzenia IoT. **Pełna izolacja od LAN.** |
-| **99** | `LAB_WAN_UPLINK` | `172.16.99.0/30` | Link P2P: USW Pro ↔ RB5009 (Interconnect). |
-| **100** | `CISCO_LAB_INSIDE`| `192.168.100.0/24` | Wewnętrzna sieć za routerami Cisco 1941. |
-| **666** | `GUEST` | `192.168.254.0/24` | Sieć dla gości. |
-
-</details>
 
 ---
 <br>
 
-## 🎯 Cele i Certyfikacja
+##  Cele i Certyfikacja
 <br>
 <details>
 <summary><b>⏳ Short-term Goals: Cisco CCNA</b></summary>
@@ -98,7 +84,7 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 | **1. Introduction to Networks** | *Wprowadzenie do sieci, modele OSI/TCP-IP, podstawy adresacji IP i architektury sieciowej.* | ✅ **DONE** | - | <img src="img\badge.png" height="50"> |
 | **2. Switching, Routing, & Wireless** | *Przełączanie (switching), routing, technologie bezprzewodowe (Wi-Fi) i podstawy VLAN-ów.* | 🔄 **In Progress** | **14.01** | 🔒 |
 | **3. Enterprise, Security, & Automation** | *Sieci enterprise, bezpieczeństwo (firewalle, VPN), automatyzacja i programowalność (SDN).* | ⏳ **Planned** | **31.01** | 🔒 |
-| **4. Egzamin CCNA 200-301** | *Pełny egzamin certyfikujący obejmujący wszystkie moduły CCNA.* | 🎯 **Cel** | **15.02** | 🏆 |
+| **4. Egzamin CCNA 200-301** | *Pełny egzamin certyfikujący obejmujący wszystkie moduły CCNA.* |  **Cel** | **15.02** | 🏆 |
 
 </details>
 
