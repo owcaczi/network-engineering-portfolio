@@ -30,7 +30,14 @@ Obecna baza sprzętowa, która ewoluuje w kierunku klastra HA (High Availability
 <br>
 
 
-## 🏗️ Topologia i Rola Urządzeń
+##  Topologia i Rola Urządzeń
+
+<details><summary><b> Schemat graficzny sieci LAN</b></summary>
+<img src="img/topology.png" width="100%">
+</details>
+
+---
+
 
 ### 1. Production Core (Ubiquiti)
 
@@ -41,11 +48,18 @@ Fundament sieci zapewniający stabilność i bezpieczeństwo.
 
   <img src="img/ucg.png" width="50%">
 ---
-* **Distribution Switch:** **USW Pro/Enterprise 24 PoE**.
+* **Distribution Switch:** **USW Pro HD 24**.
     * **Backbone:** Uplinki 10GbE SFP+
     * **Access:** Porty 2.5GbE
 
   <img src="img/switch.png" width="50%">
+---
+* **Wireless Access:** **U7 Pro XGS**.
+    * **Technologia:** **WiFi 7** (802.11be) z pełną obsługą pasma 6 GHz.
+    * **Interface:** Uplink **10 GbE** (eliminacja wąskiego gardła standardu 2.5 GbE).
+    * **Rola:** Zapewnienie bezkompromisowej przepustowości sieci szkieletowej dla urządzeń mobilnych.
+  
+  <img src="img/xgs.png" width="30%">
 ---
 ### 2. Lab & Training Zone (MikroTik)
 Środowisko "Air-Gapped" lub wydzielone, uruchamiane do celów edukacyjnych.
@@ -82,9 +96,9 @@ Fundament sieci zapewniający stabilność i bezpieczeństwo.
 | Kurs / Egzamin | Opis | Status | Deadline | Badge |
 | :--- | :--- | :---: | :---: | :---: |
 | **1. Introduction to Networks** | *Wprowadzenie do sieci, modele OSI/TCP-IP, podstawy adresacji IP i architektury sieciowej.* | ✅ **DONE** | - | <img src="img\badge.png" height="50"> |
-| **2. Switching, Routing, & Wireless** | *Przełączanie (switching), routing, technologie bezprzewodowe (Wi-Fi) i podstawy VLAN-ów.* | 🔄 **In Progress** | **14.01** | 🔒 |
-| **3. Enterprise, Security, & Automation** | *Sieci enterprise, bezpieczeństwo (firewalle, VPN), automatyzacja i programowalność (SDN).* | ⏳ **Planned** | **31.01** | 🔒 |
-| **4. Egzamin CCNA 200-301** | *Pełny egzamin certyfikujący obejmujący wszystkie moduły CCNA.* |  **Cel** | **15.02** | 🏆 |
+| **2. Switching, Routing, & Wireless** | *Przełączanie (switching), routing, technologie bezprzewodowe (Wi-Fi) i podstawy VLAN-ów.* | 🔄 **In Progress** | **31.01** | 🔒 |
+| **3. Enterprise, Security, & Automation** | *Sieci enterprise, bezpieczeństwo (firewalle, VPN), automatyzacja i programowalność (SDN).* | ⏳ **Planned** | **14.02** | 🔒 |
+| **4. Egzamin CCNA 200-301** | *Pełny egzamin certyfikujący obejmujący wszystkie moduły CCNA.* |  **Cel** | **28.02** | 🏆 |
 
 </details>
 
@@ -107,7 +121,7 @@ Fundament sieci zapewniający stabilność i bezpieczeństwo.
 
 <br>
 
-## 📅 Roadmapa implementacji technologii w homelabie
+##  Roadmapa implementacji technologii w homelabie
 
 > **Cel:** Komplikować życie, mieszać vendorów, unikać gotowców, budować od zera.
 
