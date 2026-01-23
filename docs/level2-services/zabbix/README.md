@@ -21,6 +21,6 @@ Muszę przekopać się przez logi i screenshoty, żeby przygotować tu konkretny
 
 <br>
 
-[⬅️ Powrót do Mapy Głównej](../../README.md)
+[⬅️ Powrót do Mapy Głównej](../../../README.md)
 
 </div>
