@@ -8,4 +8,4 @@
 <img src="https://cdn.simpleicons.org/linux/333333" width="40"> | **Syslog Server** | **Central Logging (Rsyslog)**<br>Zbieranie logów systemowych z urządzeń sieciowych w jednym miejscu. | [![Docs](https://img.shields.io/badge/OTWÓRZ-DOKUMENTACJĘ-333333?style=for-the-badge&logo=linux)](./syslog/README.md) |
 
 
-[⬅️ Powrót do Mapy Głównej](../../../README.md)
+[⬅️ Powrót do Mapy Głównej](../../README.md)
