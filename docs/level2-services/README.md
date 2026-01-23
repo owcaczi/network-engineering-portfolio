@@ -10,5 +10,5 @@
 
 ---
 
-[⬅️ Powrót do Mapy Głównej](../../../README.md)
+[⬅️ Powrót do Mapy Głównej](../../README.md)
 
