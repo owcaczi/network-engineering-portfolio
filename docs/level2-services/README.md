@@ -7,4 +7,4 @@
 | <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/zabbix.png" width="40"> | **Zabbix** | **Monitoring & SNMP**<br>Zbieranie metryk ze switchy, routerów i serwerów. | [![Docs](https://img.shields.io/badge/OTWÓRZ-DOKUMENTACJĘ-D40000?style=for-the-badge&logo=readme)](./zabbix/README.md) |
 <img src="https://cdn.simpleicons.org/linux/333333" width="40"> | **Syslog Server** | **Central Logging (Rsyslog)**<br>Zbieranie logów systemowych z urządzeń sieciowych w jednym miejscu. | [![Docs](https://img.shields.io/badge/OTWÓRZ-DOKUMENTACJĘ-333333?style=for-the-badge&logo=linux)](./syslog/README.md) |
 
-[⬅️ Powrót do Mapy Głównej](../../README.md)
+[⬅️ Powrót do Mapy Głównej](../../../README.md)
