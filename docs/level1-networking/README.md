@@ -9,10 +9,5 @@
 
 ---
 
-###  Skrócony status sieci
-![Switch Status](https://img.shields.io/badge/CORE_SWITCH-ONLINE-success?style=for-the-badge)
-![Gateway Status](https://img.shields.io/badge/GATEWAY-ONLINE-success?style=for-the-badge)
-![WiFi](https://img.shields.io/badge/WiFi_7-ACTIVE-blue?style=for-the-badge)
-
 [⬅️ Powrót do Mapy Głównej](../../README.md)
 
